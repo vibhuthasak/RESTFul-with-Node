@@ -1,6 +1,7 @@
 const http = require('http');
 const url = require('url');
 const { StringDecoder } = require('string_decoder');
+const config = require('./config');
 
 const server = http.createServer(function(req, res) {
 
@@ -65,8 +66,8 @@ const server = http.createServer(function(req, res) {
   });
 });
 
-server.listen(3000, function(){
-  console.log('Listening on:', 3000);
+server.listen(config.port, function(){
+  console.log(`Listening on: ${config.port}, ENV: ${config.envName}`);
 });
 
 
