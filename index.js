@@ -17,6 +17,9 @@ const server = http.createServer(function(req, res) {
   // Get the query string as object
   var queryString = parsedUrl.query;
 
+  // Request method
+  var method = req.method.toUpperCase();
+
   // Get the headers from the request as an object
   var headers = req.headers;
 
@@ -39,7 +42,25 @@ const server = http.createServer(function(req, res) {
     // res.end(`${trimmedUrl}, Method: ${req.method.toUpperCase()}`);
     
     // Selecting the handler from the trimmedURL
-    var chosedHandler = typeof(router[trimmedUrl] !== 'undefined') ? router[trimmedUrl] : handlers.notFound;
+    // Checking whether trimmedUrl is defined on the router object
+    var chosedHandler = (typeof(router[trimmedUrl]) !== 'undefined') ? router[trimmedUrl] : handlers.notFound;
+
+    // Defining the Data Object
+    var data = {
+      "trimmedPath": trimmedUrl,
+      "headers": headers,
+      "payload": buffer,
+      "method": method,
+      "query": queryString
+    }
+
+    chosedHandler(data, function(statusCode = 200, payload = {}){
+      var payloadString = JSON.stringify(payload);
+
+      res.setHeader('Content-Type', 'JSON');
+      res.writeHead(statusCode);
+      res.end(payloadString);
+    });
 
   });
 });
