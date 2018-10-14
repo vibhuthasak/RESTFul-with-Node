@@ -2,6 +2,37 @@ const http = require('http');
 const url = require('url');
 const { StringDecoder } = require('string_decoder');
 const config = require('./config');
+// const _data = require('./lib/data');
+
+// @TODO delete
+// Testing function to check data lib
+// _data.create('test', 'testFile', {'foo': 'bar'}, function (err) {
+//     console.log(err);
+// });
+
+// _data.read('test', 'testFile', function (err, data) {
+//    if(err){
+//      console.log(err);
+//    } else {
+//      console.log(data);
+//    }
+// });
+
+// _data.update('test', 'testFile', {'apple' : 'oranges'}, function (err){
+//   if(err){
+//     console.log(err);
+//   } else {
+//     console.log('Done');
+//   }
+// });
+//
+// _data.delete('test', 'testFile', function(err){
+//   if(err) {
+//     console.log(err);
+//   } else {
+//     console.log('All Clear');
+//   }
+// });
 
 const server = http.createServer(function(req, res) {
 
