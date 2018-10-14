@@ -53,7 +53,7 @@ const server = http.createServer(function(req, res) {
       "payload": buffer,
       "method": method,
       "query": queryString
-    }
+    };
 
     chosedHandler(data, function(statusCode = 200, payload = {}){
       var payloadString = JSON.stringify(payload);
@@ -72,19 +72,19 @@ server.listen(config.port, function(){
 
 
 // Handlers object
-const handlers = {}
+const handlers = {};
 
 // Add sampleRoute handler 
 handlers.sampleRoute = function(data, callback) {
   callback(200, {'route': 'Got the route'});
-}
+};
 
 // Not found handler
 handlers.notFound = function(data, callback) {
   callback(404);
-}
+};
 
 // Request router
 const router = {
   'sampleRoute': handlers.sampleRoute
-}
+};
