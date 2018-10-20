@@ -1,17 +1,19 @@
 // This is the configuration file
 
-var environments = {}
+var environments = {};
 
 // Staging environment
 environments.staging = {
   'port': 3000,
-  'envName': 'staging'
-}
+  'envName': 'staging',
+  'hashingSecret' : 'thisIsMySecret'
+};
 
 environments.production = {
   'port': 8000,
-  'envName': 'production'
-}
+  'envName': 'production',
+  'hashingSecret' : 'thisIsMySecret'
+};
 
 // Get ENV from process. On default staging
 const currentEnv = (typeof (process.env.NODE_ENV) === 'string') ? process.env.NODE_ENV.toLowerCase() : 'staging';
