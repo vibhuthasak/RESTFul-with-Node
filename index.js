@@ -1,40 +1,11 @@
 const http = require('http');
 const url = require('url');
-const { StringDecoder } = require('string_decoder');
+const {StringDecoder} = require('string_decoder');
 const config = require('./config');
-// const _data = require('./lib/data');
+const handlers = require('./lib/handlers');
+const helpers = require('./lib/helpers');
 
-// @TODO delete
-// Testing function to check data lib
-// _data.create('test', 'testFile', {'foo': 'bar'}, function (err) {
-//     console.log(err);
-// });
-
-// _data.read('test', 'testFile', function (err, data) {
-//    if(err){
-//      console.log(err);
-//    } else {
-//      console.log(data);
-//    }
-// });
-
-// _data.update('test', 'testFile', {'apple' : 'oranges'}, function (err){
-//   if(err){
-//     console.log(err);
-//   } else {
-//     console.log('Done');
-//   }
-// });
-//
-// _data.delete('test', 'testFile', function(err){
-//   if(err) {
-//     console.log(err);
-//   } else {
-//     console.log('All Clear');
-//   }
-// });
-
-const server = http.createServer(function(req, res) {
+const server = http.createServer(function (req, res) {
 
   // Parsing the URL with Query string
   var parsedUrl = url.parse(req.url, true);
@@ -50,7 +21,7 @@ const server = http.createServer(function(req, res) {
   var queryString = parsedUrl.query;
 
   // Request method
-  var method = req.method.toUpperCase();
+  var method = req.method.toLowerCase();
 
   // Get the headers from the request as an object
   var headers = req.headers;
@@ -72,21 +43,21 @@ const server = http.createServer(function(req, res) {
     // console.log('Buffer: ', buffer);
     // res.end(trimmedUrl + ' Method :' + req.method.toUpperCase() + ' Query : ' + queryString + '\n');
     // res.end(`${trimmedUrl}, Method: ${req.method.toUpperCase()}`);
-    
+
     // Selecting the handler from the trimmedURL
     // Checking whether trimmedUrl is defined on the router object
-    var chosedHandler = (typeof(router[trimmedUrl]) !== 'undefined') ? router[trimmedUrl] : handlers.notFound;
+    var chosenHandler = (typeof(router[trimmedUrl]) !== 'undefined') ? router[trimmedUrl] : handlers.notFound;
 
     // Defining the Data Object
     var data = {
       "trimmedPath": trimmedUrl,
       "headers": headers,
-      "payload": buffer,
+      "payload": helpers.parseJsonToObject(buffer),
       "method": method,
       "query": queryString
     };
 
-    chosedHandler(data, function(statusCode = 200, payload = {}){
+    chosenHandler(data, function (statusCode = 200, payload = {}) {
       var payloadString = JSON.stringify(payload);
 
       res.setHeader('Content-Type', 'JSON');
@@ -97,25 +68,12 @@ const server = http.createServer(function(req, res) {
   });
 });
 
-server.listen(config.port, function(){
+server.listen(config.port, function () {
   console.log(`Listening on: ${config.port}, ENV: ${config.envName}`);
 });
 
-
-// Handlers object
-const handlers = {};
-
-// Add sampleRoute handler 
-handlers.sampleRoute = function(data, callback) {
-  callback(200, {'route': 'Got the route'});
-};
-
-// Not found handler
-handlers.notFound = function(data, callback) {
-  callback(404);
-};
-
 // Request router
 const router = {
-  'sampleRoute': handlers.sampleRoute
+  'sampleRoute': handlers.sampleRoute,
+  'users': handlers.users,
 };
