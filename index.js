@@ -76,4 +76,5 @@ server.listen(config.port, function () {
 const router = {
   'sampleRoute': handlers.sampleRoute,
   'users': handlers.users,
+  'tokens' : handlers.tokens
 };
