@@ -59,7 +59,7 @@ const server = http.createServer(function (req, res) {
 
     chosenHandler(data, function (statusCode = 200, payload = {}) {
       var payloadString = JSON.stringify(payload);
-
+      
       res.setHeader('Content-Type', 'JSON');
       res.writeHead(statusCode);
       res.end(payloadString);
