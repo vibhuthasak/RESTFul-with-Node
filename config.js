@@ -6,13 +6,15 @@ var environments = {};
 environments.staging = {
   'port': 3000,
   'envName': 'staging',
-  'hashingSecret' : 'thisIsMySecret'
+  'hashingSecret' : 'thisIsMySecret',
+  'maxChecks': 5
 };
 
 environments.production = {
   'port': 8000,
   'envName': 'production',
-  'hashingSecret' : 'thisIsMySecret'
+  'hashingSecret' : 'thisIsMySecret',
+  'maxChecks': 5
 };
 
 // Get ENV from process. On default staging
