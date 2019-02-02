@@ -63,3 +63,6 @@ typings/
 # Data object
 .data
 .idea
+
+# Config file
+config.js
