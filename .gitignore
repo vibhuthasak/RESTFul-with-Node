@@ -64,5 +64,5 @@ typings/
 .data
 .idea
 
-# Config file
-config.js
+#  Logs directory
+.logs
