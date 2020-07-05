@@ -24,7 +24,7 @@ environments.production = {
 
 // Get ENV from process. On default staging
 const currentEnv = (typeof (process.env.NODE_ENV) === 'string') ? process.env.NODE_ENV.toLowerCase() : 'staging';
-var envToExport = '';
+let envToExport = '';
 
 if (typeof (environments[currentEnv]) === 'object') {
   envToExport = environments[currentEnv]
